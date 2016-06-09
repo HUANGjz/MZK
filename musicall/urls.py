@@ -18,5 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-	url(r'^$','callbook.views.home'),
+	url(r'^home/$','callbook.views.home',name='home'),
+	url(r'^callbook_detail/(?P<id>\w+)/$', 'callbook.views.detail', name='detail'),
+	url(r'^catalog/(?P<tag>\w+)/$', 'callbook.views.catalog', name='catalog'),
 ]
+
+

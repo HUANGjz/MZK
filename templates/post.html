@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+{% for post in post_list %}
+	<img src="{{ post.file_path }}" style="">
+	</img>
+{% endfor %}
+</div>
+{% endblock %}
