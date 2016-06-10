@@ -12,41 +12,35 @@ class CallBook(models.Model):
 		return self.name
 	class Meta:
 		ordering = ['-date_time']
+		
+class Tag(models.Model):
+	name = models.CharField(max_length=100)
+	callbook = models.ManyToManyField(CallBook)
+	def __str__(self) :
+		return self.name
 
 class PicPath(models.Model):
-	name = models.CharField(max_length=100)
+	name = models.ForeignKey(CallBook)
 	file_path = models.CharField(max_length=500)
 	
 	def __str__(self) :
-		return self.name + " " + self.file_path
+		return self.name.name + " " + self.file_path
 
-class EventCatalog(models.Model):
-	name = models.CharField(max_length=100)
+class FirstCatalog(models.Model):
+	name = models.ForeignKey(Tag)
 	if_second = models.BooleanField()
+	if_event = models.BooleanField()	
 	
 	def __str__(self) :
-		return self.name
-
-class SingerCatalog(models.Model):
-	name = models.CharField(max_length=100)
-	if_second = models.BooleanField()
-	
-	def __str__(self) :
-		return self.name
+		return self.name.name
 
 class SecondCatalog(models.Model):
-	name = models.CharField(max_length=100)
-	firstcatalog_name = models.CharField(max_length=100)
+	name = models.ForeignKey(Tag)
+	firstcatalog_name = models.ForeignKey(FirstCatalog)
 	
 	def __str__(self) :
-		return self.name
-
-class Tag(models.Model):
-	name = models.CharField(max_length=100)
-	tag_name = models.CharField(max_length=100)
-	
-	def __str__(self) :
-		return self.name + " " + self.tag_name
+		return self.name.name
+		
 
 		
 

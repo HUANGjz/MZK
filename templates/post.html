@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="#">标签：</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+		{% for tag in tag_list %}
+			<li><a href="{% url "catalog" id=tag.id %}">{{ tag.name }}</a></li>
+		{% endfor %}
+      </ul>
+   </div>
+</nav>
 <div>
 {% for post in post_list %}
 	<img src="{{ post.file_path }}" style="">

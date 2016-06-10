@@ -6,40 +6,35 @@ from django.http import Http404
 # Create your views here.
 def home(request):
 	post_list = CallBook.objects.all()
-	event_list = EventCatalog.objects.all()
-	singer_list = SingerCatalog.objects.all()
+	event_list = FirstCatalog.objects.filter(if_event=True)
+	singer_list = FirstCatalog.objects.filter(if_event=False)
 	second_list = SecondCatalog.objects.all()
 	dic = {'post_list':post_list,'event_list':event_list,'singer_list':singer_list,'second_list':second_list}
 	return render(request,'home.html',dic)
 	
 def detail(request,id):
 	try:
-		temp = CallBook.objects.get(id = str(id)).name
+		temp = CallBook.objects.get(id = str(id))
 	except CallBook.DoesNotExist:
 		raise Http404
 	try: 
 		post_list = PicPath.objects.filter(name=temp)
 	except PicPath.DoesNotExist:
 		raise Http404
-	event_list = EventCatalog.objects.all()
-	singer_list = SingerCatalog.objects.all()
+	event_list = FirstCatalog.objects.filter(if_event=True)
+	singer_list = FirstCatalog.objects.filter(if_event=False)
 	second_list = SecondCatalog.objects.all()
-	dic = {'post_list':post_list,'event_list':event_list,'singer_list':singer_list,'second_list':second_list}
+	tag_list = temp.tag_set.all()
+	dic = {'post_list':post_list,'event_list':event_list,'singer_list':singer_list,'second_list':second_list,'tag_list':tag_list}
 	return render(request,'post.html',dic)
 
-def catalog(request,tag):
+def catalog(request,id):
 	try:
-		temp_list = Tag.objects.filter(tag_name = tag) 
+		post_list = Tag.objects.get(id = id).callbook.all()
 	except Tag.DoesNotExist:
 		raise Http404
-	callbook_list = CallBook.objects.all()
-	post_list = []
-	for cb in callbook_list:
-		for temp in temp_list:
-			if  temp.name == cb.name:
-				post_list.append(cb)
-	event_list = EventCatalog.objects.all()
-	singer_list = SingerCatalog.objects.all()
+	event_list = FirstCatalog.objects.filter(if_event=True)
+	singer_list = FirstCatalog.objects.filter(if_event=False)
 	second_list = SecondCatalog.objects.all()
 	dic = {'post_list':post_list,'event_list':event_list,'singer_list':singer_list,'second_list':second_list}
 	return render(request,'catalog.html',dic)

@@ -90,20 +90,20 @@
 						{% if event.if_second %}
 							<li>
 								<a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
-									{{ event.name }}
+									{{ event.name.name }}
 									<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 								</a>
 								<ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
 									{% for second_catalog in second_list %}
-										{% ifequal second_catalog.firstcatalog_name event.name %}
-											<li><a href="{% url "catalog" tag=second_catalog.name %}">{{ second_catalog.name }}</a></li>
+										{% ifequal second_catalog.firstcatalog_name.name.name event.name.name %}
+											<li><a href="{% url "catalog" id=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
 										{% endifequal %}
 									{% endfor %}
 								</ul>
 							</li>
 						{% else %}
 							<li>
-								<a href="{% url "catalog" tag=event.name %}">
+								<a href="{% url "catalog" id=event.name.id %}">
 									{{ event.name }}		
 								</a>
 							</li>
@@ -119,20 +119,20 @@
 						{% if singer.if_second %}
 							<li>
 								<a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
-									{{ singer.name }}
+									{{ singer.name.name }}
 									<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 								</a>
 								<ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
 									{% for second_catalog in second_list %}
-										{% ifequal second_catalog.firstcatalog_name singer.name %}
-											<li><a href="{% url "catalog" tag=second_catalog.name %}">{{ second_catalog.name }}</a></li>
+										{% ifequal second_catalog.firstcatalog_name.name.name singer.name.name %}
+											<li><a href="{% url "catalog" id=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
 										{% endifequal %}
 									{% endfor %}
 								</ul>
 							</li>
 						{% else %}
 							<li>
-								<a href="{% url "catalog" tag=singer.name %}">
+								<a href="{% url "catalog" id=singer.name.id %}">
 									{{ singer.name }}		
 								</a>
 							</li>
