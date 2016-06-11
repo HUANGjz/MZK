@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from callbook.models import *
 from django.http import Http404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login,logout
+
 
 # Create your views here.
 def home(request):
@@ -38,4 +41,10 @@ def catalog(request,id):
 	second_list = SecondCatalog.objects.all()
 	dic = {'post_list':post_list,'event_list':event_list,'singer_list':singer_list,'second_list':second_list}
 	return render(request,'catalog.html',dic)
+	
+@login_required	
+def adminnew(request):
+	return render(request,'adminnew.html')
+	
+
 
