@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if error %}
+	<p>没有对应条目</p>
+{% else %}
+{% for post in post_list %}
+	<div class = "panel panel-warning">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ post.singer }}</h3>
+		</div>
+		<div class="panel-body">
+			<a href="{% url "detail" id=post.id %}">
+				{{ post.name }}
+			</a>
+		</div>		
+	</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

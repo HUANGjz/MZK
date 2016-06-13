@@ -8,7 +8,7 @@
    <div>
       <ul class="nav navbar-nav">
 		{% for tag in tag_list %}
-			<li><a href="{% url "catalog" id=tag.id %}">{{ tag.name }}</a></li>
+			<li><a href="{% url "catalog" id1=tag.id id2=0 %}">{{ tag.name }}</a></li>
 		{% endfor %}
       </ul>
    </div>

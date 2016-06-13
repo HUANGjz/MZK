@@ -21,9 +21,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^home/$','callbook.views.home',name='home'),
 	url(r'^callbook_detail/(?P<id>\w+)/$', 'callbook.views.detail', name='detail'),
-	url(r'^catalog/(?P<id>\w+)/$', 'callbook.views.catalog', name='catalog'),
+	url(r'^catalog/(?P<id1>\w+)/(?P<id2>\w+)/$', 'callbook.views.catalog', name='catalog'),
 	url(r'^admin/new/$','callbook.views.adminnew',name='adminnew'),
 	url(r'accounts/login/',login),
+	url(r'^search/$','callbook.views.callbook_search',name='search'),
 ]
 
 

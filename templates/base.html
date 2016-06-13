@@ -35,8 +35,6 @@
             #main-nav.nav-tabs.nav-stacked > li {
                 margin-bottom: 4px;
             }
-
-        /*定义二级菜单样式*/
         .secondmenu a {
             font-size: 10px;
             color: #4A515B;
@@ -79,6 +77,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
+				<form class="pure-form" action="/search/" method="get" style="margin:0px 0px 20px 0px">
+                    <input class="pure-input-3-3" type="text" name="s" placeholder="search">
+					<input type="submit" value="Search">
+                </form>
                 <ul id="main-nav" class="nav nav-tabs nav-stacked" style="">
                     <li class="active">
                         <a href="#">
@@ -89,21 +91,22 @@
 					{% for event in event_list %}
 						{% if event.if_second %}
 							<li>
-								<a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+								<a href="#event{{ event.name.id }}" class="nav-header collapsed" data-toggle="collapse">
 									{{ event.name.name }}
 									<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 								</a>
-								<ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
+								<ul id="event{{ event.name.id }}" class="nav nav-list collapse secondmenu" style="height: 0px;">
+									<li><a href="{% url "catalog" id1=event.name.id id2=0 %}">查看全部</a></li>
 									{% for second_catalog in second_list %}
 										{% ifequal second_catalog.firstcatalog_name.name.name event.name.name %}
-											<li><a href="{% url "catalog" id=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
+											<li><a href="{% url "catalog" id1=event.name.id id2=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
 										{% endifequal %}
 									{% endfor %}
 								</ul>
 							</li>
 						{% else %}
 							<li>
-								<a href="{% url "catalog" id=event.name.id %}">
+								<a href="{% url "catalog" id1=event.name.id id2=0 %}">
 									{{ event.name }}		
 								</a>
 							</li>
@@ -118,21 +121,22 @@
 					{% for singer in singer_list %}
 						{% if singer.if_second %}
 							<li>
-								<a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+								<a href="#singer{{ singer.name.id  }}" class="nav-header collapsed" data-toggle="collapse">
 									{{ singer.name.name }}
 									<span class="pull-right glyphicon glyphicon-chevron-down"></span>
 								</a>
-								<ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
+								<ul id="singer{{ singer.name.id  }}" class="nav nav-list collapse secondmenu" style="height: 0px;">
+									<li><a href="{% url "catalog" id1=singer.name.id id2=0 %}">查看全部</a></li>
 									{% for second_catalog in second_list %}
 										{% ifequal second_catalog.firstcatalog_name.name.name singer.name.name %}
-											<li><a href="{% url "catalog" id=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
+											<li><a href="{% url "catalog" id1=singer.name.id id2=second_catalog.name.id %}">{{ second_catalog.name.name }}</a></li>
 										{% endifequal %}
 									{% endfor %}
 								</ul>
 							</li>
 						{% else %}
 							<li>
-								<a href="{% url "catalog" id=singer.name.id %}">
+								<a href="{% url "catalog" id1=singer.name.id id2=0 %}">
 									{{ singer.name }}		
 								</a>
 							</li>
@@ -149,6 +153,19 @@
             </div>
         </div>
     </div>
+	{% if post_list.object_list and post_list.paginator.num_pages > 1 %}
+      <div>
+      <ul class="pager">
+      {% if post_list.has_previous %}
+        <li><a href="?page={{ post_list.previous_page_number }}">上一页</a></li>
+      {% endif %}
+
+      {% if post_list.has_next %}
+        <li><a href="?page={{ post_list.next_page_number }}">下一页</a></li>
+      {% endif %}
+      </ul>
+      </div>
+    {% endif %}
     <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script>
